@@ -8,7 +8,7 @@ if(not os.path.isfile(config_file_location)):
 	config_file = open(config_file_location, 'w')
 	
 	# Create all of the default sections first
-	config_sections = ['main', 'model_date', 'model_weather', 'model_mail']
+	config_sections = ['main', 'model_date', 'model_mail', 'model_weather']
 	for section in config_sections:
 		Config.add_section(section)
 		
