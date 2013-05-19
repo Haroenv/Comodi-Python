@@ -1,8 +1,8 @@
 <h1>Comodi</h1>
 
 <h2>About</h2>
-<div>
-<p style="text-align: justify;">Comodi is a program written in Python made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user. Other functions like playing music and setting an alarm will be added in future commits.
+<div style="text-align: justify;">
+<p>Comodi is a program written in Python made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user. Other functions like playing music and setting an alarm will be added in future commits.
 </p>
 
 <p>
@@ -11,7 +11,7 @@ This is my first Python and Raspberry Pi project, feel free to help me out by fo
 </div>
 
 <h2>Configure</h2>
-<div>
+<div style="text-align: justify;">
 <p>
 Comodi requires a working installation and configuration of <a href="http://lirc.org">LIRC</a>, visit their website for details. The configuration requires the following keys for Comodi to work as desired now or in future commits:
 <dl>
@@ -49,7 +49,7 @@ Comodi requires a working installation and configuration of <a href="http://lirc
 
 <h2>License</h2>
 
-<div>
+<div style="text-align: justify;">
 <p>
 Python program for the Raspberry Pi to make use of char LCD display.<br />
 Copyright (C) 2013  Andreas Backx
