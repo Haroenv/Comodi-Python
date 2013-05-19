@@ -16,7 +16,7 @@ if(not os.path.isfile(config_file_location)):
 	config_properties = ({'gpio_warnings' : 0, 'refresh_rate' : 0.1, 'menu_on_startup' : 1, 'enable_console_debug' : 1},
 	{'notation_date' : '%a %d %b %y', 'notation_time' : '%H:%M'},
 	{'imap4_ssl' : 'imap.gmail.com', 'mail' : '', 'password' : ''},
-	{'city' : '', 'use_celsius' : 1})
+	{'key' : '', 'city' : '', 'use_celsius' : 1})
 	
 	for s, p in zip(config_sections, config_properties):
 		for prop, value in p.items():
