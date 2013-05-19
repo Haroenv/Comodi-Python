@@ -2,7 +2,7 @@
 
 <h2>About</h2>
 <div>
-<p>Comodi is a program written in Python made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user. Other functions like playing music and setting an alarm will be added in future commits.
+<p style="text-align: justify;">Comodi is a program written in Python made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user. Other functions like playing music and setting an alarm will be added in future commits.
 </p>
 
 <p>
