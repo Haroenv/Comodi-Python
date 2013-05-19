@@ -2,6 +2,17 @@
 #- coding: utf-8 -*-
 from __future__ import unicode_literals
 #
+#
+# This Python script is from the Adafruit repository on github,
+# visit the link for details and more great scripts from Adafruit.
+# https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
+#
+# I have added some lines and methods in this script for
+# Comodi and these changes may be used under the GPLv3 license
+# as stated in the README file's license part. It's nothing much
+# though because I'm not the best Python scripter out there.
+#
+#
 # based on code from lrvick and LiquidCrystal
 # lrvic - https://github.com/lrvick/raspi-hd44780/blob/master/hd44780.py
 # LiquidCrystal - https://github.com/arduino/Arduino/blob/master/libraries/LiquidCrystal/LiquidCrystal.cpp
