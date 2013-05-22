@@ -28,11 +28,11 @@ Comodi requires a working installation and configuration of <a href="http://lirc
 <dt>KEY_3</dt>
 	<dd>Switch to menu 3</dd>
 <dt>KEY_PREVIOUSSONG</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Go to the previous song</dd>
 <dt>KEY_PLAYPAUSE</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Play or pause the song</dd>
 <dt>KEY_NEXTSONG</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Go to the next song</dd>
 <dt>KEY_VOLUMEDOWN</dt>
 	<dd>Not yet implemented</dd>
 <dt>KEY_VOLUMEUP</dt>
