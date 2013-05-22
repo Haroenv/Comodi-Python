@@ -12,7 +12,7 @@ class Infrared(Thread):
 		process = subprocess.Popen('irw', stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		Logger = lib_config.Logger
 		while True:
-			line = process.stdout.readline()
+			line = process.stdout.readline().decode()
 			if(line):
 				line_info = line.split(' ')
 				key = line_info[2]

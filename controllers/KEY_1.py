@@ -1,18 +1,19 @@
 #- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import models.infrared as model_infrared
 import models.lcd as model_lcd
-import libs.Config as libs_config
+import libs.Config as lib_config
 import models.mail as model_mail
 import models.weather as model_weather
 import models.date as model_date
 from libs import Controller
 
 class KEY_1(Controller.Controller):
-	def __init__(self):
+	def __init__(self, bootstrap):
 		# Initialize parent class
-		super(KEY_1, self).__init__()
+		# super(KEY_1, self)
+		
+		Logger = lib_config.Logger
 		
 		# LINE 1
 		line1 = ['Comodi', True]
