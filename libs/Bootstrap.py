@@ -24,7 +24,9 @@ class Bootstrap:
 						
 		self.musicControllers = {'KEY_NEXTSONG' : self.Music.nextSong,
 							'KEY_PREVIOUSSONG' : self.Music.prevSong,
-							'KEY_PLAYPAUSE' : self.Music.play
+							'KEY_PLAYPAUSE' : self.Music.play,
+							'KEY_VOLUMEUP' : self.Music.volumeUp,
+							'KEY_VOLUMEDOWN' : self.Music.volumeDown
 							}
 		
 		self.delay = 0
