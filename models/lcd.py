@@ -284,7 +284,7 @@ class Adafruit_CharLCD:
 				
 	def lines(self, line1='', line2='', line3='', line4=''):
 		self.clear()
-		lines = [line1, line3, line2, line4]
+		lines = [line1[:20], line3[:20], line2[:20], line4[:20]]
 		for line in lines:
 			if(not isinstance(line, str)):
 				self.message(line[0], line[1])

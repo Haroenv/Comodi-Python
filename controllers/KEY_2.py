@@ -1,5 +1,5 @@
 from libs import Controller, Config as lib_config
-from models import lcd as model_lcd, music as model_music
+from models import lcd as model_lcd
 
 class KEY_2(Controller.Controller):
 	def __init__(self, bootstrap):
@@ -7,19 +7,20 @@ class KEY_2(Controller.Controller):
 		# super(KEY_1, self)
 		
 		Logger = lib_config.Logger
-		Music = model_music.Music
+		Music = bootstrap.Music
 		
 		# LINE 1
 		line1 = ['Music Player', True]
 		
 		# LINE 2
-		line2 = ['Santa Fe', True]
+		song = Music.getSong()
+		line2 = [song[:20], True]
 	
 		# LINE 3
-		line3 = ['Meneer prot', True]
+		line3 = [song[21:40], True]
 	
 		# LINE 4
-		line4 = '1/18'
+		line4 = [str(Music.getSongNumber()) + '/' + str(Music.getSongTotal()), True]
 	
 		# DISPLAY
 		lcd = model_lcd.Adafruit_CharLCD()

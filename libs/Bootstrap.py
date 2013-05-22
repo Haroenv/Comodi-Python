@@ -33,8 +33,8 @@ class Bootstrap:
 		self.delay_time = 0
 		self.refresh_rate = float(self.Config.get('main', 'refresh_rate'))
 		
-		irThread = Thread(target=model_infrared.Infrared)
-		irThread.start()
+		self.irThread = Thread(target=model_infrared.Infrared)
+		self.irThread.start()
 		
 		self.current_menu = self.menus['KEY_' + str(self.Config.get('main', 'menu_on_startup'))]
 		
@@ -49,6 +49,9 @@ class Bootstrap:
 			self.lcd.clear()
 			sys.exit()
 			
+	def refresh(self):
+		self.current_menu(self)
+		
 	def start(self, first = False):
 		key = model_infrared.getKey()
 		
@@ -64,10 +67,11 @@ class Bootstrap:
 					controller = self.controllers[key](self)
 				elif(key in self.musicControllers):
 					musicController = self.musicControllers[key]()
+					self.refresh()
 				else:
 					self.Logger.debug('The key "' + str(key) + '" has not been defined!')
 			elif self.current_menu != None:
-				self.current_menu(self).__init__(self)
+				self.refresh()
 			self.delay = 0
 			self.delay_time = 60 - int(time.strftime('%S', time.localtime()))
 		else:
