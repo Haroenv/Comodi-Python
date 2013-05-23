@@ -10,9 +10,11 @@ class Bootstrap:
 		self.lcd = model_lcd.Adafruit_CharLCD()
 		self.lcd.lines('', ['Welcome to Comodi', True], ['Loading...', True])
 		
+		
 		# Initialization
 		self.Config = lib_config.Config
 		self.Logger = lib_config.Logger
+		self.Logger.info('Please wait for Comodi to finish booting.')
 		self.Music = model_music.Music(self)
 		
 		self.menus = {'KEY_1': KEY_1.KEY_1,
@@ -20,9 +22,9 @@ class Bootstrap:
 					'KEY_3': KEY_3.KEY_3
 						}
 		
-		self.controllers = {'KEY_POWER' : KEY_POWER.KEY_POWER }
+		self.displayControllers = {'KEY_POWER' : KEY_POWER.KEY_POWER }
 						
-		self.musicControllers = {'KEY_NEXTSONG' : self.Music.nextSong,
+		self.controllerMethods = {'KEY_NEXTSONG' : self.Music.nextSong,
 							'KEY_PREVIOUSSONG' : self.Music.prevSong,
 							'KEY_PLAYPAUSE' : self.Music.play,
 							'KEY_VOLUMEUP' : self.Music.volumeUp,
@@ -41,6 +43,7 @@ class Bootstrap:
 		
 		# Start Comodi
 		self.start(True)
+		self.Logger.info('Welcome to Comodi, you can now control me.')
 		try:
 			while True:
 				self.start()
@@ -51,38 +54,42 @@ class Bootstrap:
 			sys.exit()
 			
 	def refresh(self, key = False):
+		self.Logger.debug('Refresh: key = ' + str(key) )
 		if(key != False and key == self.current_menu_key):
 			self.current_menu(self)
-		elif(key == False):
+		elif(key == False and self.current_menu_key == 'KEY_1'):
 			self.current_menu(self)
 		
 	def start(self, first = False):
 		# Check for a key pressed on the remote
 		key = model_infrared.getKey()
 		
-		if(key != False or self.delay >= self.delay_time or first == True):
-			# Key pressed, one minute has passed or this is the first time
-			self.Logger.debug(time.strftime('%H:%M:%S', time.localtime()))
-			self.Logger.debug('key: ' + str(key))
+		if(key != False or (self.delay >= self.delay_time and not self.lcd.sleep) or first == True):
+			# Key set or (minute has passed and lcd is not in sleep mode) or when it's the first time
+			# --> Will only update when a button is pressed in sleep mode
 			if(key != False):
-				if(self.lcd.sleep == False and key in self.menus):
+				# Key set
+				if(key in self.menus):
+					# If the key is a menu key, open the menu's class
 					self.current_menu_key = key
 					self.current_menu = self.menus[key]
 					self.current_menu(self)
-				elif(key in self.controllers):
-					controller = self.controllers[key](self)
-				elif(key in self.musicControllers):
-					musicController = self.musicControllers[key]()
+				elif(key in self.controllerMethods):
+					# Fire controllerMethods
+					controllerMethod = self.controllerMethods[key]()
+				elif(key in self.displayControllers):
+					displayController = self.displayControllers[key](self)
 				else:
-					self.Logger.debug('The key "' + str(key) + '" has not been defined!')
-			elif self.current_menu != None:
+					self.Logger.debug('The key "' + key + '" has not been defined!')
+				print('')
+			else:
+				# Key not set, refresh display
 				self.refresh()
+			# Reset delay and set time till next minute
 			self.delay = 0
 			self.delay_time = 60 - int(time.strftime('%S', time.localtime()))
-			print('')
 		else:
+			# Key not set, check again
 			self.delay += self.refresh_rate
 			time.sleep(self.refresh_rate)
-			
-			
 			

@@ -14,11 +14,12 @@ class Music:
 		pygame.mixer.init()
 		
 		# Defaults
-		self.controller = 'KEY_1'
+		self.controller = 'KEY_2'
 		self.bootstrap = bootstrap
 		self.Config = lib_config.Config
 		self.Logger = lib_config.Logger
 		self.mixerMusic = pygame.mixer.music
+		self.mixerMusic.set_volume(1)
 		self.song_current = 0
 		self.paused = False
 		
@@ -65,7 +66,7 @@ class Music:
 				
 		else:
 			# Play/Pause song
-			if(self.mixerMusic.get_pos() == -1):
+			if(not self.hasStarted()):
 				# Song never started because -1 means not started
 				self.Logger.debug('No song playing')
 				self.mixerMusic.load(self.music_dir + self.songs[self.song_current])
@@ -81,6 +82,7 @@ class Music:
 				self.Logger.debug('Music unpaused: ' + str(self.mixerMusic.get_pos()))
 				self.mixerMusic.unpause()
 				self.paused = False
+		self.refresh()
 		
 	def nextSong(self):
 		self.play(1) 
@@ -90,6 +92,8 @@ class Music:
 		self.play(-1) 
 		
 	def getSong(self):
+		if(not self.isPlaying() and not self.hasStarted()):
+			return False
 		return self.songs[self.song_current]
 		
 	def getSongNumber(self):
@@ -102,6 +106,9 @@ class Music:
 		result = (self.mixerMusic.get_busy() and not self.paused)
 		self.Logger.debug('Result = (' + str(self.mixerMusic.get_busy()) + ' and ' + str(not self.paused) + ')')
 		return result
+		
+	def hasStarted(self):
+		return (not self.mixerMusic.get_pos() == -1)
 		
 	def setVolume(self, option):
 		volume = self.mixerMusic.get_volume()
@@ -119,11 +126,19 @@ class Music:
 		self.setVolume(-1)
 			
 	def getVolume(self):
-		return self.mixerMusic.get_volume() * 10
+		return int(self.mixerMusic.get_volume() * 10)
 		
 	def getProgress(self):
 		self.Logger.debug(str(self.mixerMusic.get_pos() / 1000))
 		return int(self.mixerMusic.get_pos() / 1000)
+		
+	def getState(self):
+		if(self.isPlaying()):
+			return 'Playing'
+		elif(not self.hasStarted()):
+			return 'Stopped'
+		else:
+			return 'Paused'
 		
 	def refresh(self):
 		self.bootstrap.refresh(self.controller)

@@ -181,14 +181,6 @@ class Adafruit_CharLCD:
 		self.displaycontrol &= ~self.LCD_BLINKON
 		self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
 
-
-	def noBlink(self):
-		""" Turn on and off the blinking cursor """
-
-		self.displaycontrol &= ~self.LCD_BLINKON
-		self.write4bits(self.LCD_DISPLAYCONTROL | self.displaycontrol)
-
-
 	def DisplayLeft(self):
 		""" These commands scroll the display without changing the RAM """
 

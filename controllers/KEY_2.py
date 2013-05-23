@@ -14,13 +14,31 @@ class KEY_2(Controller.Controller):
 		
 		# LINE 2
 		song = Music.getSong()
+		if(song == False):
+			song = 'Not available'
+		else:
+			song = song[:-4]
 		line2 = [song[:20], True]
 	
 		# LINE 3
-		line3 = [song[21:40], True]
+		line3 = [song[20:40], True]
 	
 		# LINE 4
-		line4 = [str(Music.getSongNumber()) + '/' + str(Music.getSongTotal()), True]
+		song_info = str(Music.getSongNumber()) + '/' + str(Music.getSongTotal())
+		volume = str(Music.getVolume()) + '/10'
+		state = Music.getState()
+		
+		song_info_len = len(song_info)
+		volume_len = len(volume)
+		state_len = len(state)
+		
+		Logger.debug('"'+song_info+'"')
+		Logger.debug('"'+volume+'"')
+		Logger.debug('"'+state+'"')
+		
+		volume = volume.center(20-state_len-song_info_len)
+		
+		line4 = song_info + volume + state
 	
 		# DISPLAY
 		lcd = model_lcd.Adafruit_CharLCD()

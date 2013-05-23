@@ -11,7 +11,7 @@ if(not os.path.isfile(config_file_location)):
 	os.chmod(config_file_location, stat.S_IRWXO)
 	
 	# Create all of the default sections first
-	config_sections = ['main', 'model_date', 'model_mail', 'model_weather', 'model_music']
+	config_sections = ['main', 'model_date', 'model_mail', 'model_music']
 	for section in config_sections:
 		Config.add_section(section)
 		
@@ -19,7 +19,7 @@ if(not os.path.isfile(config_file_location)):
 	config_properties = ({'gpio_warnings' : 0, 'refresh_rate' : 0.1, 'menu_on_startup' : 1, 'debug' : 1},
 	{'notation_date' : '%a %d %b %y', 'notation_time' : '%H:%M'},
 	{'imap4_ssl' : 'imap.gmail.com', 'mail' : '', 'password' : ''},
-	{'key' : '', 'city' : '', 'use_celsius' : 1}, {'directory' : ''})
+	{'directory' : ''})
 	
 	for s, p in zip(config_sections, config_properties):
 		for prop, value in p.items():
