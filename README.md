@@ -16,33 +16,33 @@ This is my first Python and Raspberry Pi project, feel free to help me out by fo
 Comodi requires a working installation and configuration of <a href="http://lirc.org">LIRC</a> and, visit their website for details. The configuration requires the following keys for Comodi to work as desired now or in future commits:
 <dl>
 <dt>Name of the key</dt>
-	<dd>Usage of the key</dd>
+	<dd>Usage of the key.</dd>
 <dt>KEY_ENTER</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Not yet implemented, any ideas?</dd>
 <dt>KEY_POWER</dt>
-	<dd>Turn display on/off</dd>
+	<dd>Turn display on/off.</dd>
 <dt>KEY_1</dt>
-	<dd>Switch to menu 1</dd>
+	<dd>Switch to menu 1.</dd>
 <dt>KEY_2</dt>
-	<dd>Switch to menu 2</dd>
+	<dd>Switch to menu 2.</dd>
 <dt>KEY_3</dt>
-	<dd>Switch to menu 3</dd>
+	<dd>Switch to menu 3.</dd>
 <dt>KEY_PREVIOUSSONG</dt>
-	<dd>Go to the previous song</dd>
+	<dd>Go to the previous song or rewind song.</dd>
 <dt>KEY_PLAYPAUSE</dt>
-	<dd>Play or pause the song</dd>
+	<dd>Play or pause the song.</dd>
 <dt>KEY_NEXTSONG</dt>
-	<dd>Go to the next song</dd>
+	<dd>Go to the next song.</dd>
 <dt>KEY_VOLUMEDOWN</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Lower the volume, min. 0.</dd>
 <dt>KEY_VOLUMEUP</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Turn the volume up, max. 10.</dd>
 <dt>KEY_PROG1</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Not yet implemented, but will be used to enable alarm 1.</dd>
 <dt>KEY_PROG2</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Not yet implemented, but will be used to enable alarm 2.</dd>
 <dt>KEY_SUSPEND</dt>
-	<dd>Not yet implemented</dd>
+	<dd>Not yet implemented, but will be used to snooze the alarm.</dd>
 </dl>
 </p>
 </div>
