@@ -13,7 +13,7 @@ class Bootstrap:
 		# Initialization
 		self.Config = lib_config.Config
 		self.Logger = lib_config.Logger
-		self.Music = model_music.Music()
+		self.Music = model_music.Music(self)
 		
 		self.menus = {'KEY_1': KEY_1.KEY_1,
 					'KEY_2': KEY_2.KEY_2,
@@ -36,7 +36,8 @@ class Bootstrap:
 		self.irThread = Thread(target=model_infrared.Infrared)
 		self.irThread.start()
 		
-		self.current_menu = self.menus['KEY_' + str(self.Config.get('main', 'menu_on_startup'))]
+		self.current_menu_key = 'KEY_' + str(self.Config.get('main', 'menu_on_startup'))
+		self.current_menu = self.menus[self.current_menu_key]
 		
 		# Start Comodi
 		self.start(True)
@@ -49,31 +50,36 @@ class Bootstrap:
 			self.lcd.clear()
 			sys.exit()
 			
-	def refresh(self):
-		self.current_menu(self)
+	def refresh(self, key = False):
+		if(key != False and key == self.current_menu_key):
+			self.current_menu(self)
+		elif(key == False):
+			self.current_menu(self)
 		
 	def start(self, first = False):
+		# Check for a key pressed on the remote
 		key = model_infrared.getKey()
 		
 		if(key != False or self.delay >= self.delay_time or first == True):
+			# Key pressed, one minute has passed or this is the first time
 			self.Logger.debug(time.strftime('%H:%M:%S', time.localtime()))
 			self.Logger.debug('key: ' + str(key))
 			if(key != False):
 				if(self.lcd.sleep == False and key in self.menus):
+					self.current_menu_key = key
 					self.current_menu = self.menus[key]
 					self.current_menu(self)
-					self.Logger.debug(str(self.current_menu))
 				elif(key in self.controllers):
 					controller = self.controllers[key](self)
 				elif(key in self.musicControllers):
 					musicController = self.musicControllers[key]()
-					self.refresh()
 				else:
 					self.Logger.debug('The key "' + str(key) + '" has not been defined!')
 			elif self.current_menu != None:
 				self.refresh()
 			self.delay = 0
 			self.delay_time = 60 - int(time.strftime('%S', time.localtime()))
+			print('')
 		else:
 			self.delay += self.refresh_rate
 			time.sleep(self.refresh_rate)
