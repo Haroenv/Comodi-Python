@@ -4,20 +4,18 @@
 # N = 2 -> HDMI audio output
 
 import pygame, time, os
-from libs import Config as lib_config
+from libs import Config as lib_config, Model as lib_model
 from models import musicevents as model_musicevents
 from threading import Thread
 
-class Music:
-	def __init__(self, bootstrap):
+class Music(lib_model.Model):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
 		pygame.init()
 		pygame.mixer.init()
 		
 		# Defaults
 		self.controller = 'KEY_2'
-		self.bootstrap = bootstrap
-		self.Config = lib_config.Config
-		self.Logger = lib_config.Logger
 		self.mixerMusic = pygame.mixer.music
 		self.mixerMusic.set_volume(1)
 		self.song_current = 0
@@ -41,7 +39,7 @@ class Music:
 			# Next/Previous song
 			if(option == -1 and self.getProgress() >= 10):
 				# PreviousSong, but progress >= 10 -> rewind
-				self.Logger.debug('Song didn\'t just start start -> rewind, progress: ' + str(self.getProgress()))
+				self.Logger.debug('Rewind song')
 				self.mixerMusic.rewind()
 				self.mixerMusic.play()
 			else:
@@ -54,10 +52,7 @@ class Music:
 					# If it's the first song and he wants to go to the previous song, go to the end
 					self.song_current = self.song_total - 1
 					
-				self.Logger.debug('OPTION: ' + str(option))
-				self.Logger.debug('Changing song but it\'s playing so I\'ll have to stop current first')
-				self.Logger.debug('previous song_current = ' + str(self.song_current))
-				self.Logger.debug('song_current = ' + str(self.song_current))
+				self.Logger.debug('Next/previous song')
 				self.mixerMusic.stop()
 				self.mixerMusic.load(self.music_dir + self.songs[self.song_current])
 				self.mixerMusic.play()
@@ -68,25 +63,24 @@ class Music:
 			# Play/Pause song
 			if(not self.hasStarted()):
 				# Song never started because -1 means not started
-				self.Logger.debug('No song playing')
+				self.Logger.debug('Start playing')
 				self.mixerMusic.load(self.music_dir + self.songs[self.song_current])
 				self.mixerMusic.play()
 				self.paused = False
 			elif(self.isPlaying()):
 				# Song is playing -> pause it
-				self.Logger.debug('Keep song -> pause')
+				self.Logger.debug('Pause song')
 				self.mixerMusic.pause()
 				self.paused = True
 			else:
 				# The song is paused -> unpause it
-				self.Logger.debug('Music unpaused: ' + str(self.mixerMusic.get_pos()))
+				self.Logger.debug('Song unpaused')
 				self.mixerMusic.unpause()
 				self.paused = False
 		self.refresh()
 		
 	def nextSong(self):
-		self.play(1) 
-		
+		self.play(1)
 		
 	def prevSong(self):
 		self.play(-1) 
@@ -104,7 +98,6 @@ class Music:
 		
 	def isPlaying(self):
 		result = (self.mixerMusic.get_busy() and not self.paused)
-		self.Logger.debug('Result = (' + str(self.mixerMusic.get_busy()) + ' and ' + str(not self.paused) + ')')
 		return result
 		
 	def hasStarted(self):
@@ -129,7 +122,6 @@ class Music:
 		return int(self.mixerMusic.get_volume() * 10)
 		
 	def getProgress(self):
-		self.Logger.debug(str(self.mixerMusic.get_pos() / 1000))
 		return int(self.mixerMusic.get_pos() / 1000)
 		
 	def getState(self):
@@ -139,7 +131,4 @@ class Music:
 			return 'Stopped'
 		else:
 			return 'Paused'
-		
-	def refresh(self):
-		self.bootstrap.refresh(self.controller)
 		

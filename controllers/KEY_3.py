@@ -1,25 +1,29 @@
 from libs import Controller, Config as lib_config
-from models import lcd as model_lcd
+from models import lcd as model_lcd, date as model_date
 
 class KEY_3(Controller.Controller):
-	def __init__(self, bootstrap):
-		# Initialize parent class
-		# super(KEY_1, self)
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
 		
-		Logger = lib_config.Logger
+		lines = []
 		
 		# LINE 1
-		line1 = ['Nothing here', True]
+		lines.append(['Alarms', 'center'])
 		
 		# LINE 2
-		line2 = ''
+		Alarm = self.bootstrap.Alarm
+		alarms = Alarm.getAlarm()
+			
+		lines.append(alarms[0][0] + ' - ' + str(alarms[0][1]))
 	
 		# LINE 3
-		line3 = ''
+		lines.append(alarms[1][0] + ' - ' + str(alarms[1][1]))
 	
 		# LINE 4
-		line4 = ['Still nothing', True]
+		Date = model_date.Date()
+		date_info = Date.getInfo()
+		lines.append(date_info[1] + '  ' + date_info[0])
 	
 		# DISPLAY
 		lcd = model_lcd.Adafruit_CharLCD()
-		lcd.lines(line1, line2, line3, line4)
+		lcd.message(lines)

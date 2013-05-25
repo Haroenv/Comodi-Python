@@ -1,4 +1,4 @@
-from models import infrared as model_infrared, lcd as model_lcd, music as model_music
+from models import infrared as model_infrared, lcd as model_lcd, music as model_music, alarm as model_alarm
 from libs import Config as lib_config
 from threading import Thread
 from controllers import KEY_1, KEY_2, KEY_3, KEY_POWER
@@ -8,14 +8,15 @@ class Bootstrap:
 	def __init__(self):
 		# Start the screen with 'loading'
 		self.lcd = model_lcd.Adafruit_CharLCD()
-		self.lcd.lines('', ['Welcome to Comodi', True], ['Loading...', True])
+		self.lcd.message(['', ['Welcome to Comodi', 'center'], ['Loading...', 'center']])
 		
 		
 		# Initialization
 		self.Config = lib_config.Config
 		self.Logger = lib_config.Logger
-		self.Logger.info('Please wait for Comodi to finish booting.')
+		print('\033[1m' + 'Please wait for Comodi to finish booting.'.center(80) + '\033[0m')
 		self.Music = model_music.Music(self)
+		self.Alarm = model_alarm.Alarm(self)
 		
 		self.menus = {'KEY_1': KEY_1.KEY_1,
 					'KEY_2': KEY_2.KEY_2,
@@ -28,7 +29,9 @@ class Bootstrap:
 							'KEY_PREVIOUSSONG' : self.Music.prevSong,
 							'KEY_PLAYPAUSE' : self.Music.play,
 							'KEY_VOLUMEUP' : self.Music.volumeUp,
-							'KEY_VOLUMEDOWN' : self.Music.volumeDown
+							'KEY_VOLUMEDOWN' : self.Music.volumeDown,
+							'KEY_PROG1' : self.Alarm.setFirstAlarm,
+							'KEY_PROG2' : self.Alarm.setSecondAlarm
 							}
 		
 		self.delay = 0
@@ -43,7 +46,8 @@ class Bootstrap:
 		
 		# Start Comodi
 		self.start(True)
-		self.Logger.info('Welcome to Comodi, you can now control me.')
+		print('\033[1m' + 'Welcome to Comodi, you can now control me.'.center(80))
+		print('\n--------------------------------------------------------------------------------\033[0m')
 		try:
 			while True:
 				self.start()
@@ -54,10 +58,9 @@ class Bootstrap:
 			sys.exit()
 			
 	def refresh(self, key = False):
-		self.Logger.debug('Refresh: key = ' + str(key) )
 		if(key != False and key == self.current_menu_key):
 			self.current_menu(self)
-		elif(key == False and self.current_menu_key == 'KEY_1'):
+		elif(key == False and self.current_menu_key != 'KEY_2'):
 			self.current_menu(self)
 		
 	def start(self, first = False):
@@ -71,21 +74,25 @@ class Bootstrap:
 				# Key set
 				if(key in self.menus):
 					# If the key is a menu key, open the menu's class
+					print('')
 					self.current_menu_key = key
 					self.current_menu = self.menus[key]
 					self.current_menu(self)
 				elif(key in self.controllerMethods):
 					# Fire controllerMethods
+					print('')
 					controllerMethod = self.controllerMethods[key]()
 				elif(key in self.displayControllers):
+					print('')
 					displayController = self.displayControllers[key](self)
 				else:
+					print('')
 					self.Logger.debug('The key "' + key + '" has not been defined!')
-				print('')
 			else:
 				# Key not set, refresh display
 				self.refresh()
 			# Reset delay and set time till next minute
+			self.Alarm.alarm()
 			self.delay = 0
 			self.delay_time = 60 - int(time.strftime('%S', time.localtime()))
 		else:

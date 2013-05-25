@@ -1,17 +1,17 @@
-import time as timelib
-from libs import Config as lib_config
+import time as lib_time
+from libs import Controller as lib_controller
 
-class Date:
-	
-	def __init__(self):
-		Config = lib_config.Config
-		self.notation_date = Config.get('model_date', 'notation_date')
-		self.notation_time = Config.get('model_date', 'notation_time')
+class Date(lib_controller.Controller):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		
+		self.notation_date = self.Config.get('model_date', 'notation_date')
+		self.notation_time = self.Config.get('model_date', 'notation_time')
 	
 	def getInfo(self):
-		localtime = timelib.localtime()
-		date = timelib.strftime(self.notation_date, localtime)
-		time = timelib.strftime(self.notation_time, localtime)
+		localtime = lib_time.localtime()
+		date = lib_time.strftime(self.notation_date, localtime)
+		time = lib_time.strftime(self.notation_time, localtime)
 		result = [time, date]
 		return result
 		

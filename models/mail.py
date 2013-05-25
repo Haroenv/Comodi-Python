@@ -8,12 +8,13 @@ class Mail:
 		server = self.Config.get('model_mail', 'imap4_ssl')
 		mail = self.Config.get('model_mail', 'mail')
 		password = self.Config.get('model_mail', 'password')
-		for t in range(0,2):
+		while True:
 			try:
 				self.obj = imaplib.IMAP4_SSL(server, '993')
 				self.obj.login(mail, password)
 				return
 			except Exception as e:
+				self.Logger.debug(str(e))
 				continue
 	def getUnread(self):
 		self.obj.select()

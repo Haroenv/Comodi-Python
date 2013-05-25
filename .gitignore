@@ -4,3 +4,4 @@
 *.log
 *.ini
 */__pycache__
+test*

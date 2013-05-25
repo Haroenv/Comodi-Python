@@ -5,29 +5,27 @@ import models.date as model_date
 from libs import Controller
 
 class KEY_1(Controller.Controller):
-	def __init__(self, bootstrap):
-		# Initialize parent class
-		# super(KEY_1, self)
-		
-		Logger = lib_config.Logger
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		lines = []
 		
 		# LINE 1
-		line1 = ['Home', True]
+		lines.append(['Home', 'center'])
 		
 		# LINE 2
 		Mail = model_mail.Mail()
 		unread_messages = Mail.getUnread()
-		line2 = [str(unread_messages) + ' unread messages', True]
+		lines.append([str(unread_messages) + ' unread messages', 'center'])
 	
 		# LINE 3
-		line3 = ''
+		lines.append('')
 	
 		# LINE 4
 		# DATE & TIME
 		Date = model_date.Date()
 		date_info = Date.getInfo()
-		line4 = date_info[1] + '  ' + date_info[0]
+		lines.append(date_info[1] + '  ' + date_info[0])
 	
 		# DISPLAY
 		lcd = model_lcd.Adafruit_CharLCD()
-		lcd.lines(line1, line2, line3, line4)
+		lcd.message(lines)

@@ -106,6 +106,9 @@ class Adafruit_CharLCD:
 
 		self.clear()
 		
+		self.numlines = 4
+		self.numcols = 20
+		
 		# Comodi backlight & sleepmode
 		self.GPIO.output(pin_bl, True)
 		self.sleep = False
@@ -113,9 +116,10 @@ class Adafruit_CharLCD:
 	def begin(self, cols, lines):
 
 		if (lines > 1):
-			self.numlines = lines
-			self.displayfunction |= self.LCD_2LINE
 			self.currline = 0
+			self.numlines = lines
+			self.numcols = cols
+			self.displayfunction |= self.LCD_2LINE
 
 
 	def home(self):
@@ -261,41 +265,29 @@ class Adafruit_CharLCD:
 		self.GPIO.output(self.pin_e, False)
 		self.delayMicroseconds(1)		# commands need > 37us to settle
 
-	def message(self, text, center = False):
+	def message(self, lines):
 		""" Send string to LCD. Newline wraps to second line"""
+		for i, line in enumerate(lines):
+			if i == 1:
+				self.write4bits(0xC0)
+			elif i == 2:
+				self.write4bits(0x94)
+			elif i >= 3:
+				self.write4bits(0xD4)
 			
-		if(center):
-			text = text.center(20)
-		else:
-			text = text.ljust(20)
-		for char in text:
-			if char == '\n':
-				self.write4bits(0xC0) # next line
-			else:
-				self.write4bits(ord(char),True)
-				
-	def lines(self, line1='', line2='', line3='', line4=''):
-		self.clear()
-		lines = [line1[:20], line3[:20], line2[:20], line4[:20]]
-		for line in lines:
+			limit = False
+			center = False
+			lineLength = len(line)
+			limit = self.numcols
+			
 			if(not isinstance(line, str)):
-				self.message(line[0], line[1])
-			else:
-				self.message(line)
-				
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				if line[1] == 'center':
+					line[0] = line[0].center(limit)
+				else:
+					line[0] = line[0][0:limit-3] + '...'
+				line = line[0]
 			
+			for char in line:
+				self.write4bits(ord(char),True)
+		
 				
