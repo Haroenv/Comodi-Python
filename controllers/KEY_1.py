@@ -53,7 +53,7 @@ class KEY_1(lib_controller.Controller):
 		date = date_info[1]
 		
 		if(self.date != date):
-			self.lcd.write(date + '  ' + time, 3, 0)
+			self.lcd.write(date + '  ' + self.time, 3, 0)
 			self.date = date
 		else:
 			time_length = len(self.time)

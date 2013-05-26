@@ -2,7 +2,7 @@
 
 <h2>About</h2>
 <div style="text-align: justify;">
-<p>Comodi is a program written in <strong>Python 3</strong> made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user. Other functions like playing music and setting an alarm will be added in future commits.
+<p>Comodi is a program written in <strong>Python 3</strong> made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user.
 </p>
 
 <p>
@@ -13,7 +13,7 @@ This is my first Python and Raspberry Pi project, feel free to help me out by fo
 <h2>Configure</h2>
 <div style="text-align: justify;">
 <p>
-Comodi requires a working installation and configuration of <a href="http://lirc.org">LIRC</a> and, visit their website for details. The configuration requires the following keys for Comodi to work as desired now or in future commits:
+Comodi requires a working installation and configuration of <a href="http://lirc.org">LIRC</a> and <a href="http://www.pygame.org">PyGame</a>, visit their websites for details. The LIRC configuration requires the following keys for Comodi to work as desired now or in future commits:
 <dl>
 <dt>Name of the key</dt>
 	<dd>Usage of the key.</dd>
@@ -38,9 +38,9 @@ Comodi requires a working installation and configuration of <a href="http://lirc
 <dt>KEY_VOLUMEUP</dt>
 	<dd>Turn the volume up, max. 10.</dd>
 <dt>KEY_PROG1</dt>
-	<dd>Not yet implemented, but will be used to enable alarm 1.</dd>
+	<dd>Enable alarm 1.</dd>
 <dt>KEY_PROG2</dt>
-	<dd>Not yet implemented, but will be used to enable alarm 2.</dd>
+	<dd>Enable alarm 2.</dd>
 <dt>KEY_SUSPEND</dt>
 	<dd>Not yet implemented, but will be used to snooze the alarm.</dd>
 </dl>
