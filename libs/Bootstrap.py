@@ -8,24 +8,37 @@ class Bootstrap:
 	def __init__(self):
 		# Start the screen with 'loading'
 		self.lcd = model_lcd.Adafruit_CharLCD()
-		self.lcd.message(['', ['Welcome to Comodi', 'center'], ['Loading...', 'center']])
+		self.lcd.message(['', ['Welcome to Comodi', 'center']])
+		self.loadIcon = '#|'
+		self.loadingCount = 0
+		self.loading()
 		
 		
 		# Initialization
+		self.loading()
 		self.Config = lib_config.Config
+		self.loading()
 		self.Logger = lib_config.Logger
+		self.loading()
 		print('\033[1m' + 'Please wait for Comodi to finish booting.'.center(80) + '\033[0m')
+		self.loading()
 		self.Music = model_music.Music(self)
+		self.loading()
 		self.Alarm = model_alarm.Alarm(self)
+		self.loading()
 		self.Mail = model_mail.Mail(self)
+		self.loading()
 		self.Date = model_date.Date(self)
+		self.loading()
 		
 		self.menus = {'KEY_1': KEY_1.KEY_1,
 					'KEY_2': KEY_2.KEY_2,
 					'KEY_3': KEY_3.KEY_3
 						}
+		self.loading()
 		
 		self.displayControllers = {'KEY_POWER' : KEY_POWER.KEY_POWER }
+		self.loading()
 						
 		self.controllerMethods = {'KEY_NEXTSONG' : self.Music.nextSong,
 							'KEY_PREVIOUSSONG' : self.Music.prevSong,
@@ -35,17 +48,25 @@ class Bootstrap:
 							'KEY_PROG1' : self.Alarm.setFirstAlarm,
 							'KEY_PROG2' : self.Alarm.setSecondAlarm
 							}
+		self.loading()
 		
 		self.delay = 0
 		self.delay_time = 0
+		self.loading()
 		self.refresh_rate = float(self.Config.get('main', 'refresh_rate'))
+		self.loading()
 		
 		self.irThread = Thread(target=model_infrared.Infrared)
+		self.loading()
 		self.irThread.start()
+		self.loading()
 		
 		self.current_menu_key = 'KEY_' + str(self.Config.get('main', 'menu_on_startup'))
+		self.loading()
 		self.current_menu = self.menus[self.current_menu_key]
+		self.loading()
 		self.current_menu = self.current_menu(self)
+		self.loading()
 		
 		# Start Comodi
 		self.start(True)
@@ -107,4 +128,12 @@ class Bootstrap:
 			# Key not set, check again
 			self.delay += self.refresh_rate
 			time.sleep(self.refresh_rate)
+		
+	def loading(self):
+		if(self.loadingCount == 0):
+			self.lcd.write('[', 3, 0)
+			self.lcd.write(']', 3, 19)
+		else:
+			self.lcd.write(self.loadIcon, 3, self.loadingCount)
+		self.loadingCount += 1
 			
