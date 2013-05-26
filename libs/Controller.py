@@ -5,3 +5,4 @@ class Controller:
 		self.bootstrap = bootstrap
 		self.Logger = lib_config.Logger
 		self.Config = lib_config.Config
+		self.lcd = bootstrap.lcd
