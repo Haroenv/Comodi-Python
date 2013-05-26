@@ -134,14 +134,14 @@ class Adafruit_CharLCD:
 		self.delayMicroseconds(3000)	# 3000 microsecond sleep, clearing the display takes a long time
 
 
-	def setCursor(self, col, row):
+	def setCursor(self, numline, numcol):
 
 		self.row_offsets = [ 0x00, 0x40, 0x14, 0x54 ]
 
-		if ( row > self.numlines ): 
-			row = self.numlines - 1 # we count rows starting w/0
+		if ( numline > self.numlines ): 
+			numline = self.numlines - 1 # we count rows starting w/0
 
-		self.write4bits(self.LCD_SETDDRAMADDR | (col + self.row_offsets[row]))
+		self.write4bits(self.LCD_SETDDRAMADDR | (numcol + self.row_offsets[numline]))
 
 
 	def noDisplay(self): 
@@ -267,6 +267,7 @@ class Adafruit_CharLCD:
 
 	def message(self, lines):
 		""" Send string to LCD. Newline wraps to second line"""
+		self.clear()
 		for i, line in enumerate(lines):
 			if i == 1:
 				self.write4bits(0xC0)
@@ -286,8 +287,14 @@ class Adafruit_CharLCD:
 				else:
 					line[0] = line[0][0:limit-3] + '...'
 				line = line[0]
+			self.write(line)
 			
-			for char in line:
-				self.write4bits(ord(char),True)
+				
+	def write(self, line, numline = None, numcol = None):
+		if numline != None and numcol != None:
+			self.setCursor(numline, numcol)
+		for char in line:
+			self.write4bits(ord(char),True)
+		self.home()
 		
 				

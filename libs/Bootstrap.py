@@ -1,4 +1,4 @@
-from models import infrared as model_infrared, lcd as model_lcd, music as model_music, alarm as model_alarm
+from models import infrared as model_infrared, lcd as model_lcd, music as model_music, alarm as model_alarm, mail as model_mail, date as model_date
 from libs import Config as lib_config
 from threading import Thread
 from controllers import KEY_1, KEY_2, KEY_3, KEY_POWER
@@ -17,6 +17,8 @@ class Bootstrap:
 		print('\033[1m' + 'Please wait for Comodi to finish booting.'.center(80) + '\033[0m')
 		self.Music = model_music.Music(self)
 		self.Alarm = model_alarm.Alarm(self)
+		self.Mail = model_mail.Mail(self)
+		self.Date = model_date.Date(self)
 		
 		self.menus = {'KEY_1': KEY_1.KEY_1,
 					'KEY_2': KEY_2.KEY_2,
@@ -43,6 +45,7 @@ class Bootstrap:
 		
 		self.current_menu_key = 'KEY_' + str(self.Config.get('main', 'menu_on_startup'))
 		self.current_menu = self.menus[self.current_menu_key]
+		self.current_menu = self.current_menu(self)
 		
 		# Start Comodi
 		self.start(True)
@@ -58,16 +61,22 @@ class Bootstrap:
 			sys.exit()
 			
 	def refresh(self, key = False):
-		if(key != False and key == self.current_menu_key):
-			self.current_menu(self)
-		elif(key == False and self.current_menu_key != 'KEY_2'):
-			self.current_menu(self)
+		if(key != False and key == self.current_menu_key and not self.lcd.sleep):
+			if hasattr(self.current_menu, 'update'):
+				self.current_menu.update()
+			else:
+				self.current_menu.__init__(self)
+		elif(key == False and self.current_menu_key != 'KEY_2' and not self.lcd.sleep):
+			if hasattr(self.current_menu, 'update'):
+				self.current_menu.update()
+			else:
+				self.current_menu.__init__(self)
 		
 	def start(self, first = False):
 		# Check for a key pressed on the remote
 		key = model_infrared.getKey()
 		
-		if(key != False or (self.delay >= self.delay_time and not self.lcd.sleep) or first == True):
+		if(key != False or self.delay >= self.delay_time or first == True):
 			# Key set or (minute has passed and lcd is not in sleep mode) or when it's the first time
 			# --> Will only update when a button is pressed in sleep mode
 			if(key != False):
@@ -76,8 +85,7 @@ class Bootstrap:
 					# If the key is a menu key, open the menu's class
 					print('')
 					self.current_menu_key = key
-					self.current_menu = self.menus[key]
-					self.current_menu(self)
+					self.current_menu = self.menus[key](self)
 				elif(key in self.controllerMethods):
 					# Fire controllerMethods
 					print('')
