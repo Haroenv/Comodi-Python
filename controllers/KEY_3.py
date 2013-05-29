@@ -20,10 +20,9 @@ class KEY_3(Controller.Controller):
 		lines.append(alarms[1][0] + ' - ' + str(alarms[1][1]))
 	
 		# LINE 4
-		Date = model_date.Date()
+		Date = self.bootstrap.Date
 		date_info = Date.getInfo()
 		lines.append(date_info[1] + '  ' + date_info[0])
 	
 		# DISPLAY
-		lcd = model_lcd.Adafruit_CharLCD()
-		lcd.message(lines)
+		self.bootstrap.lcd.message(lines)

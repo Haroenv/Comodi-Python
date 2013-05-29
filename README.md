@@ -1,24 +1,23 @@
 <h1>Comodi</h1>
 
 <h2>About</h2>
-<div style="text-align: justify;">
-<p>Comodi is a program written in <strong>Python 3</strong> made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user.
-</p>
+<div>
+	<p>Comodi is a program written in <strong>Python 3</strong> made with and for the Raspberry Pi. It uses a char LCD display, current support is only a 20x4 display, to display various amounts of information to the user.
+	</p>
 
-<p>
-This is my first Python and Raspberry Pi project, feel free to help me out by forking this repository, reporting bugs and propose features to the program.
-</p>
+	<p>
+	This is my first Python and Raspberry Pi project, feel free to help me out by forking this repository, reporting bugs and propose features to the program.
+	</p>
 </div>
 
 <h2>Configure</h2>
-<div style="text-align: justify;">
+<div>
 <p>
-Comodi requires a working installation and configuration of <a href="http://lirc.org">LIRC</a> and <a href="http://www.pygame.org">PyGame</a>, visit their websites for details. The LIRC configuration requires the following keys for Comodi to work as desired now or in future commits:
+Comodi requires the a working installation and configuration of <a href="http://lirc.org">LIRC</a> and <a href="http://www.pygame.org">PyGame</a>. More information about those products is on their websites. A full guide on how to get Comodi setup can be found <a href="https://github.com/Dreeass/Comodi/wiki/Setting-up-Comodi">here</a>.
+</p>
+
+The following keys need to be configured in LIRC for Comodi to work as desired:
 <dl>
-<dt>Name of the key</dt>
-	<dd>Usage of the key.</dd>
-<dt>KEY_ENTER</dt>
-	<dd>Not yet implemented, any ideas?</dd>
 <dt>KEY_POWER</dt>
 	<dd>Turn display on/off.</dd>
 <dt>KEY_1</dt>
@@ -41,15 +40,13 @@ Comodi requires a working installation and configuration of <a href="http://lirc
 	<dd>Enable alarm 1.</dd>
 <dt>KEY_PROG2</dt>
 	<dd>Enable alarm 2.</dd>
-<dt>KEY_SUSPEND</dt>
-	<dd>Not yet implemented, but will be used to snooze the alarm.</dd>
 </dl>
-</p>
+
 </div>
 
 <h2>License</h2>
 
-<div style="text-align: justify;">
+<div>
 <p>
 Python program for the Raspberry Pi to make use of char LCD display.<br />
 Copyright (C) 2013  Andreas Backx
