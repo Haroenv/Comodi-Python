@@ -13,7 +13,7 @@
 <h2>Configure</h2>
 <div>
 <p>
-Comodi requires the a working installation and configuration of <a href="http://lirc.org">LIRC</a> and <a href="http://www.pygame.org">PyGame</a>. More information about those products is on their websites. A full guide on how to get Comodi setup can be found <a href="https://github.com/Dreeass/Comodi/wiki/Setting-up-Comodi">here</a>.
+Comodi requires the a working installation and configuration of <a href="http://lirc.org">LIRC</a> and <a href="http://www.pygame.org">PyGame</a>. More information about those products is on their websites. A full guide on how to get Comodi setup can be found <a href="https://github.com/Dreeass/Comodi-Python/wiki/Setting-up-Comodi">here</a>.
 </p>
 
 The following keys need to be configured in LIRC for Comodi to work as desired:
