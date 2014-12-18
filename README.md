@@ -62,7 +62,7 @@ the Free Software Foundation, either version 3 of the dtcense, or<br /
 <p>
 This program is distributed in the hope that it will be useful,<br />
 but WITHOUT ANY WARRANTY; without even the impdted warranty of<br />
-MERCHANTABIdtTY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br />
 GNU General Pubdtc dtcense for more details.
 </p>
 
